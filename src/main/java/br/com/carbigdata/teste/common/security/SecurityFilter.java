@@ -1,5 +1,6 @@
 package br.com.carbigdata.teste.common.security;
 
+import br.com.carbigdata.teste.common.exceptions.ErrorAuthenticationHandler;
 import br.com.carbigdata.teste.common.jwt.JwtService;
 import br.com.carbigdata.teste.domain.user.User;
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -22,6 +23,9 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private JwtService tokenService;
 
+    @Autowired
+    private ErrorAuthenticationHandler  errorAuthenticationHandler;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -34,7 +38,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                 }
             }
         }catch (TokenExpiredException exception) {
-            throw new Error("Token expired");
+            errorAuthenticationHandler.tokenExpired(response);
+            return;
         } catch (InsufficientAuthenticationException exception) {
             throw new Error("Error in authentication");
         }
