@@ -38,7 +38,12 @@ public class OccurrenceControllerImpl implements IOccurrenceController {
     }
 
     @Override
-    public List<OccurrencePaginateResponseDTO> getOccurrences(int page, int size) {
-        return occurrenceService.getOccurrences(page, size);
+    public List<OccurrencePaginateResponseDTO> getOccurrencesDetails(int page, int size) {
+        return occurrenceService.getOccurrencesDetails(page, size);
+    }
+
+    @Override
+    public void finalizeOccurrence(Long id) {
+        occurrenceService.finalizeOccurrence(id);
     }
 }

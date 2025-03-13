@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OccurrenceRepository extends JpaRepository<Occurrence, Long> {
 
+    //TODO - Implementar a consulta de ocorrencias detalhada
     Page<Occurrence> findAll(Pageable pageable);
 }

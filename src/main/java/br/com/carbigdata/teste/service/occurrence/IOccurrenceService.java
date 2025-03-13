@@ -16,5 +16,7 @@ public interface IOccurrenceService {
 
     OccurrenceDTO getOccurrence( Long id);
 
-    List<OccurrencePaginateResponseDTO> getOccurrences( int page, int size);
+    List<OccurrencePaginateResponseDTO> getOccurrencesDetails( int page, int size);
+
+    void finalizeOccurrence(Long id);
 }

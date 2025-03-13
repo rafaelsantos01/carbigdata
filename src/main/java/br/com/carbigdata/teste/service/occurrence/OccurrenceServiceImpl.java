@@ -56,7 +56,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
         Occurrence occurrence = findByIdOccurrence(id);
 
         if(occurrence.getStaOcorrencia().equals(SITUATION_INCIDENT.FINALIZADA)){
-            throw new Error("Ocorrência ja finalizada");
+            throw new Error("Ocorrência já finalizada");
         }
 
         occurrence.setDtaOcorrencia(request.getDtaOcorrencia());
@@ -91,7 +91,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     }
 
     @Override
-    public List<OccurrencePaginateResponseDTO> getOccurrences(int page, int size) {
+    public List<OccurrencePaginateResponseDTO> getOccurrencesDetails(int page, int size) {
         List<OccurrencePaginateResponseDTO> responseDTOS = new ArrayList<>();
         OccurrencePaginateResponseDTO occurrencePaginateResponseDTO = new OccurrencePaginateResponseDTO();
         List<OccurrenceDTO> content = new ArrayList<>();
@@ -111,10 +111,21 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
         return responseDTOS;
     }
 
+    @Override
+    public void finalizeOccurrence(Long id) {
+        Occurrence occurrence = findByIdOccurrence(id);
+        if(occurrence.getStaOcorrencia().equals(SITUATION_INCIDENT.FINALIZADA)){
+            throw new Error("Ocorrência já finalizada");
+        }
+
+        occurrence.setStaOcorrencia(SITUATION_INCIDENT.FINALIZADA);
+
+        occurrenceRepository.saveAndFlush(occurrence);
+    }
+
     private Occurrence findByIdOccurrence(Long id) {
         return occurrenceRepository.findById(id).orElseThrow(() -> new Error("Occurrence not found"));
     }
-
 
     private OccurrenceDTO createResponseOccurrence(Occurrence occurrence, Address address, Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();

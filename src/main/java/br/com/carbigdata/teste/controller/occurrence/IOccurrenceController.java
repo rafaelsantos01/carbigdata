@@ -29,9 +29,13 @@ public interface IOccurrenceController {
     @ResponseStatus(HttpStatus.OK)
     OccurrenceDTO getOccurrence(@PathVariable Long id);
 
-    @GetMapping
+    @GetMapping("/detailed")
     @ResponseStatus(HttpStatus.OK)
-    List<OccurrencePaginateResponseDTO> getOccurrences(@RequestParam(defaultValue = "0") int page,
+    List<OccurrencePaginateResponseDTO> getOccurrencesDetails(@RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "5") int size);
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void finalizeOccurrence(@PathVariable Long id);
 
 }
