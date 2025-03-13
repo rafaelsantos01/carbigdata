@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-@Table(name = "Cliente")
+@Table(name = "cliente")
 @Entity
 @Getter
 @Setter
