@@ -1,6 +1,6 @@
 package br.com.carbigdata.teste.controller.address.dto;
 
-import br.com.carbigdata.teste.domain.address.AddressDTO;
+import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
 import lombok.Getter;
 import lombok.Setter;
 

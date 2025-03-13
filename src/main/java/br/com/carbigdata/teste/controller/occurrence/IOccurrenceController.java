@@ -1,5 +1,8 @@
 package br.com.carbigdata.teste.controller.occurrence;
 
+import br.com.carbigdata.teste.controller.occurrence.dto.OccurrencePaginateResponseDTO;
+import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceRequestDTO;
+import br.com.carbigdata.teste.domain.occurrence.OccurrenceDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +13,11 @@ public interface IOccurrenceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    Object createOccurrence(@Valid @RequestBody Object request);
+    OccurrenceDTO createOccurrence(@Valid @RequestBody OccurrenceRequestDTO request);
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    Object updateOccurrence(@PathVariable Long id,@Valid @RequestBody Object request);
+    OccurrenceDTO updateOccurrence(@PathVariable Long id,@Valid @RequestBody OccurrenceRequestDTO request);
 
 
     @DeleteMapping("/{id}")
@@ -24,11 +27,11 @@ public interface IOccurrenceController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    Object getOccurrence(@PathVariable Long id);
+    OccurrenceDTO getOccurrence(@PathVariable Long id);
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<Object> getOccurrences(@RequestParam(defaultValue = "0") int page,
-                                @RequestParam(defaultValue = "5") int size);
+    List<OccurrencePaginateResponseDTO> getOccurrences(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "5") int size);
 
 }

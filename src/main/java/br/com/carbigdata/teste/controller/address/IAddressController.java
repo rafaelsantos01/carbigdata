@@ -2,7 +2,7 @@ package br.com.carbigdata.teste.controller.address;
 
 import br.com.carbigdata.teste.controller.address.dto.AddressPaginatedResponseDTO;
 import br.com.carbigdata.teste.controller.address.dto.CreateAddressRequestDTO;
-import br.com.carbigdata.teste.domain.address.AddressDTO;
+import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

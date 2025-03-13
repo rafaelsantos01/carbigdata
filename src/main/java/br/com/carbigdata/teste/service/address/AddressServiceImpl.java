@@ -3,7 +3,7 @@ package br.com.carbigdata.teste.service.address;
 import br.com.carbigdata.teste.controller.address.dto.AddressPaginatedResponseDTO;
 import br.com.carbigdata.teste.controller.address.dto.CreateAddressRequestDTO;
 import br.com.carbigdata.teste.domain.address.Address;
-import br.com.carbigdata.teste.domain.address.AddressDTO;
+import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
 import br.com.carbigdata.teste.repository.AddressRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

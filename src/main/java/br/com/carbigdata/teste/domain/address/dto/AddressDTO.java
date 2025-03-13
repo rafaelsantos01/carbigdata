@@ -1,4 +1,4 @@
-package br.com.carbigdata.teste.domain.address;
+package br.com.carbigdata.teste.domain.address.dto;
 
 import lombok.Getter;
 import lombok.Setter;
