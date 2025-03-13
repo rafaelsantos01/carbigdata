@@ -29,7 +29,7 @@ public class Customer {
     private Date dtaNascimento;
 
     @Column(name = "nro_cpf", nullable = false)
-    private String nro_cpf;
+    private String nroCpf;
 
     @Column(name = "dta_criacao", nullable = false)
     private Timestamp dtaCriacao;
