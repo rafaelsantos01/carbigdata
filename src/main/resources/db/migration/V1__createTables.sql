@@ -34,3 +34,9 @@ CREATE TABLE foto_ocorrencia (
                                  dsc_hash TEXT NOT NULL,
                                  CONSTRAINT fk_foto_ocorrencia FOREIGN KEY (cod_ocorrencia) REFERENCES ocorrencia (cod_ocorrencia)
 );
+
+CREATE TABLE usuario (
+                         cod_usuario SERIAL PRIMARY KEY,
+                         username VARCHAR(255) UNIQUE NOT NULL,
+                         password VARCHAR(255) NOT NULL
+);
