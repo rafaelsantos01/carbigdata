@@ -1,5 +1,6 @@
 package br.com.carbigdata.teste.service.occurrence;
 
+import br.com.carbigdata.teste.ENUM.SITUATION_INCIDENT;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrencePaginateResponseDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceRequestDTO;
 import br.com.carbigdata.teste.domain.address.Address;
@@ -7,7 +8,7 @@ import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
 import br.com.carbigdata.teste.domain.customer.Customer;
 import br.com.carbigdata.teste.domain.customer.dto.CustomerDTO;
 import br.com.carbigdata.teste.domain.occurrence.Occurrence;
-import br.com.carbigdata.teste.domain.occurrence.OccurrenceDTO;
+import br.com.carbigdata.teste.domain.occurrence.dto.OccurrenceDTO;
 import br.com.carbigdata.teste.repository.AddressRepository;
 import br.com.carbigdata.teste.repository.CustomerRepository;
 import br.com.carbigdata.teste.repository.OccurrenceRepository;
@@ -53,6 +54,11 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     @Override
     public OccurrenceDTO updateOccurrence(Long id, OccurrenceRequestDTO request) {
         Occurrence occurrence = findByIdOccurrence(id);
+
+        if(occurrence.getStaOcorrencia().equals(SITUATION_INCIDENT.FINALIZADA)){
+            throw new Error("Ocorrência ja finalizada");
+        }
+
         occurrence.setDtaOcorrencia(request.getDtaOcorrencia());
         occurrence.setStaOcorrencia(request.getStaOcorrencia());
 

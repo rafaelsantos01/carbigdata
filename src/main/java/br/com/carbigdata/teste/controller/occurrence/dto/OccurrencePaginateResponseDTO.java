@@ -1,6 +1,6 @@
 package br.com.carbigdata.teste.controller.occurrence.dto;
 
-import br.com.carbigdata.teste.domain.occurrence.OccurrenceDTO;
+import br.com.carbigdata.teste.domain.occurrence.dto.OccurrenceDTO;
 import lombok.Getter;
 import lombok.Setter;
 

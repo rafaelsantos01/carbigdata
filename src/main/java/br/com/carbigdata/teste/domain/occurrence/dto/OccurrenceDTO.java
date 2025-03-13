@@ -1,4 +1,4 @@
-package br.com.carbigdata.teste.domain.occurrence;
+package br.com.carbigdata.teste.domain.occurrence.dto;
 
 import br.com.carbigdata.teste.ENUM.SITUATION_INCIDENT;
 import br.com.carbigdata.teste.domain.address.dto.AddressDTO;

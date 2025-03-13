@@ -2,7 +2,7 @@ package br.com.carbigdata.teste.service.occurrence;
 
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrencePaginateResponseDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceRequestDTO;
-import br.com.carbigdata.teste.domain.occurrence.OccurrenceDTO;
+import br.com.carbigdata.teste.domain.occurrence.dto.OccurrenceDTO;
 
 import java.util.List;
 
