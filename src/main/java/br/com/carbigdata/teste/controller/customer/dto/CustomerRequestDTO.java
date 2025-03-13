@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 @Getter
 @Setter

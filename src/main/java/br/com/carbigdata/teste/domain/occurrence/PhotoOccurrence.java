@@ -34,4 +34,9 @@ public class PhotoOccurrence {
     @Column(name = "dsc_hash", nullable = false)
     private String dscHash;
 
+    @PrePersist
+    protected void onCreate() {
+        this.dtaCriacao = new Timestamp(System.currentTimeMillis());
+    }
+
 }
