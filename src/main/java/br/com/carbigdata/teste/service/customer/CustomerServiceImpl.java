@@ -44,6 +44,12 @@ public class CustomerServiceImpl implements ICustomerService{
     public CustomerDTO updateCustomer(CustomerRequestDTO customerDTO, Long id) {
         Customer customerOptional = findCustomerById(id);
 
+        customerRepository.findByNroCpf(customerDTO.getNro_cpf()).ifPresent(customer -> {
+            if(!customer.getCodCliente().equals(customerOptional.getCodCliente())){
+                throw new Error("CPF já cadastrado");
+            }
+        });
+
         customerOptional.setNmeCliente(customerDTO.getNme_cliente());
         customerOptional.setNroCpf(utilDocuments.clearDocument(customerDTO.getNro_cpf()));
         customerOptional.setDtaNascimento(customerDTO.getDta_nascimento());
