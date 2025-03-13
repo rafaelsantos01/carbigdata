@@ -1,6 +1,7 @@
-package br.com.carbigdata.teste.controller.user.customer;
+package br.com.carbigdata.teste.controller.customer;
 
-import br.com.carbigdata.teste.controller.user.customer.dto.CustomerRequestDTO;
+import br.com.carbigdata.teste.controller.customer.dto.CustomerPaginatedResponseDTO;
+import br.com.carbigdata.teste.controller.customer.dto.CustomerRequestDTO;
 import br.com.carbigdata.teste.domain.customer.dto.CustomerDTO;
 import br.com.carbigdata.teste.service.customer.ICustomerService;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,7 @@ public class CustomerControllerImpl implements ICustomerController{
     }
 
     @Override
-    public List<CustomerDTO> getCustomers() {
-        return customerService.getCustomers();
+    public List<CustomerPaginatedResponseDTO> getCustomers(int page, int size) {
+        return customerService.getCustomers(page, size);
     }
 }

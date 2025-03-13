@@ -1,6 +1,7 @@
 package br.com.carbigdata.teste.service.customer;
 
-import br.com.carbigdata.teste.controller.user.customer.dto.CustomerRequestDTO;
+import br.com.carbigdata.teste.controller.customer.dto.CustomerPaginatedResponseDTO;
+import br.com.carbigdata.teste.controller.customer.dto.CustomerRequestDTO;
 import br.com.carbigdata.teste.domain.customer.dto.CustomerDTO;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -17,5 +18,5 @@ public interface ICustomerService {
 
     CustomerDTO getCustomer(@PathVariable Long id);
 
-    List<CustomerDTO> getCustomers();
+    List<CustomerPaginatedResponseDTO> getCustomers(int page, int size);
 }

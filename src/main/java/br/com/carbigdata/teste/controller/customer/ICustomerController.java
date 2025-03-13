@@ -1,6 +1,7 @@
-package br.com.carbigdata.teste.controller.user.customer;
+package br.com.carbigdata.teste.controller.customer;
 
-import br.com.carbigdata.teste.controller.user.customer.dto.CustomerRequestDTO;
+import br.com.carbigdata.teste.controller.customer.dto.CustomerPaginatedResponseDTO;
+import br.com.carbigdata.teste.controller.customer.dto.CustomerRequestDTO;
 import br.com.carbigdata.teste.domain.customer.dto.CustomerDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,6 @@ public interface ICustomerController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<CustomerDTO> getCustomers();
+    List<CustomerPaginatedResponseDTO> getCustomers(@RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "5") int size);
 }

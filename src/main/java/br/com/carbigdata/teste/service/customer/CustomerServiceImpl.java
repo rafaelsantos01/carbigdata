@@ -1,15 +1,19 @@
 package br.com.carbigdata.teste.service.customer;
 
-import br.com.carbigdata.teste.controller.user.customer.dto.CustomerRequestDTO;
+import br.com.carbigdata.teste.controller.customer.dto.CustomerPaginatedResponseDTO;
+import br.com.carbigdata.teste.controller.customer.dto.CustomerRequestDTO;
 import br.com.carbigdata.teste.domain.customer.Customer;
 import br.com.carbigdata.teste.domain.customer.dto.CustomerDTO;
 import br.com.carbigdata.teste.repository.CustomerRepository;
 import br.com.carbigdata.teste.utils.UtilDocuments;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -40,7 +44,13 @@ public class CustomerServiceImpl implements ICustomerService{
     public CustomerDTO updateCustomer(CustomerRequestDTO customerDTO, Long id) {
         Customer customerOptional = findCustomerById(id);
 
-        return null;
+        customerOptional.setNmeCliente(customerDTO.getNme_cliente());
+        customerOptional.setNroCpf(utilDocuments.clearDocument(customerDTO.getNro_cpf()));
+        customerOptional.setDtaNascimento(customerDTO.getDta_nascimento());
+
+        Customer customerSaved = customerRepository.saveAndFlush(customerOptional);
+
+        return createResponseCustomer(customerSaved);
     }
 
     @Override
@@ -58,8 +68,25 @@ public class CustomerServiceImpl implements ICustomerService{
     }
 
     @Override
-    public List<CustomerDTO> getCustomers() {
-        return List.of();
+    public List<CustomerPaginatedResponseDTO> getCustomers(int page, int size) {
+        List<CustomerPaginatedResponseDTO> customerPaginatedResponseDTOS = new ArrayList<>();
+        List<CustomerDTO> content = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Customer> customerPage = customerRepository.findAll(pageable);
+
+        for(Customer customer : customerPage.getContent()){
+            content.add(createResponseCustomer(customer));
+        }
+
+        CustomerPaginatedResponseDTO customerPaginatedResponseDTO = new CustomerPaginatedResponseDTO();
+        customerPaginatedResponseDTO.setContet(content);
+        customerPaginatedResponseDTO.setTotalPages(customerPage.getTotalPages());
+        customerPaginatedResponseDTO.setTotalElements(customerPage.getTotalElements());
+
+        customerPaginatedResponseDTOS.add(customerPaginatedResponseDTO);
+
+        return customerPaginatedResponseDTOS;
     }
 
     private Customer findCustomerById(Long id){

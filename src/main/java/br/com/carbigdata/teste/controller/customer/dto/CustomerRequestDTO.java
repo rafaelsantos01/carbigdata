@@ -1,4 +1,4 @@
-package br.com.carbigdata.teste.controller.user.customer.dto;
+package br.com.carbigdata.teste.controller.customer.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
