@@ -29,5 +29,6 @@ public interface IAddressController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<AddressPaginatedResponseDTO> getAllAddress(int size, int page);
+    List<AddressPaginatedResponseDTO> getAllAddress(@RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "5") int size);
 }
