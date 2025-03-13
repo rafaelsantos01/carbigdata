@@ -1,12 +1,24 @@
 package br.com.carbigdata.teste.controller.user.customer.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 
+@Getter
+@Setter
 public class CustomerRequestDTO {
 
-    String nmeCliente;
-    Date dtaNascimento;
-    String nroCpf;
-    Timestamp dtaCriacao;
+    @NotBlank
+    private String nme_cliente;
+
+    @NotNull
+    private Date dta_nascimento;
+
+    @CPF
+    private String nro_cpf;
 }

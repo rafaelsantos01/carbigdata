@@ -34,4 +34,8 @@ public class Customer {
     @Column(name = "dta_criacao", nullable = false)
     private Timestamp dtaCriacao;
 
+    @PrePersist
+    protected void onCreate() {
+        this.dtaCriacao = new Timestamp(System.currentTimeMillis());
+    }
 }

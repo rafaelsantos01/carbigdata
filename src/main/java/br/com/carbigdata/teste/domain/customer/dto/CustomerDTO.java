@@ -9,9 +9,10 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 public class CustomerDTO {
-    Long codCliente;
-    String nmeCliente;
-    Date dtaNascimento;
-    String nroCpf;
-    Timestamp dtaCriacao;
+    private Long codCliente;
+    private String nmeCliente;
+    private Date dtaNascimento;
+    private String nroCpf;
+    private Timestamp dtaCriacao;
+
 }
