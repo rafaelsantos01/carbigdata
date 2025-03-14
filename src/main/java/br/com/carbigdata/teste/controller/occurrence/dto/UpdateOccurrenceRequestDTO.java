@@ -9,11 +9,17 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class OccurrenceRequestDTO {
+public class UpdateOccurrenceRequestDTO {
 
     @NotNull
     private Timestamp dtaOcorrencia;
 
     @NotNull
     private SITUATION_INCIDENT staOcorrencia;
+
+    @NotNull
+    private Long addressId;
+
+    @NotNull
+    private Long customerId;
 }

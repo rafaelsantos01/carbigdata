@@ -2,6 +2,7 @@ package br.com.carbigdata.teste.controller.occurrence;
 
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrencePaginateResponseDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceRequestDTO;
+import br.com.carbigdata.teste.controller.occurrence.dto.UpdateOccurrenceRequestDTO;
 import br.com.carbigdata.teste.domain.occurrence.dto.OccurrenceDTO;
 import br.com.carbigdata.teste.service.occurrence.IOccurrenceService;
 import lombok.AllArgsConstructor;
@@ -18,12 +19,12 @@ public class OccurrenceControllerImpl implements IOccurrenceController {
     private  final IOccurrenceService occurrenceService;
 
     @Override
-    public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request) {
-        return occurrenceService.createOccurrence(request);
+    public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request, Long id, Long idAddress) {
+        return occurrenceService.createOccurrence(request,id,idAddress);
     }
 
     @Override
-    public OccurrenceDTO updateOccurrence(Long id, OccurrenceRequestDTO request) {
+    public OccurrenceDTO updateOccurrence(Long id, UpdateOccurrenceRequestDTO request) {
         return occurrenceService.updateOccurrence(id, request);
     }
 

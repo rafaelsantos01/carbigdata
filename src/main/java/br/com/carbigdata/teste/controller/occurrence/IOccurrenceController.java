@@ -2,6 +2,7 @@ package br.com.carbigdata.teste.controller.occurrence;
 
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrencePaginateResponseDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceRequestDTO;
+import br.com.carbigdata.teste.controller.occurrence.dto.UpdateOccurrenceRequestDTO;
 import br.com.carbigdata.teste.domain.occurrence.dto.OccurrenceDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -11,13 +12,13 @@ import java.util.List;
 
 public interface IOccurrenceController {
 
-    @PostMapping
+    @PostMapping("/customer/{id}/address/{idAddress}")
     @ResponseStatus(HttpStatus.CREATED)
-    OccurrenceDTO createOccurrence(@Valid @RequestBody OccurrenceRequestDTO request);
+    OccurrenceDTO createOccurrence(@Valid @RequestBody OccurrenceRequestDTO request,@PathVariable Long id, @PathVariable Long idAddress);
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    OccurrenceDTO updateOccurrence(@PathVariable Long id,@Valid @RequestBody OccurrenceRequestDTO request);
+    OccurrenceDTO updateOccurrence(@PathVariable Long id,@Valid @RequestBody UpdateOccurrenceRequestDTO request);
 
 
     @DeleteMapping("/{id}")
@@ -37,5 +38,7 @@ public interface IOccurrenceController {
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void finalizeOccurrence(@PathVariable Long id);
+
+
 
 }

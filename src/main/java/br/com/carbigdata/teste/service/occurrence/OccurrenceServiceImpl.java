@@ -3,6 +3,7 @@ package br.com.carbigdata.teste.service.occurrence;
 import br.com.carbigdata.teste.ENUM.SITUATION_INCIDENT;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrencePaginateResponseDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceRequestDTO;
+import br.com.carbigdata.teste.controller.occurrence.dto.UpdateOccurrenceRequestDTO;
 import br.com.carbigdata.teste.domain.address.Address;
 import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
 import br.com.carbigdata.teste.domain.customer.Customer;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +39,10 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     private final UtilDocuments utilDocuments;
 
     @Override
-    public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request) {
-        Address address = addressRepository.findById(request.getAddressId()).orElseThrow(() -> new Error("Address not found"));
+    public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request,Long customerId, Long idAddress) {
+        Address address = addressRepository.findById(idAddress).orElseThrow(() -> new Error("Address not found"));
 
-        Customer customer = customerRepository.findById(request.getCustomerId()).orElseThrow(() -> new Error("Customer not found"));
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new Error("Customer not found"));
 
         Occurrence occurrence = new Occurrence();
         occurrence.setAddress(address);
@@ -54,7 +56,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     }
 
     @Override
-    public OccurrenceDTO updateOccurrence(Long id, OccurrenceRequestDTO request) {
+    public OccurrenceDTO updateOccurrence(Long id, UpdateOccurrenceRequestDTO request) {
         Occurrence occurrence = findByIdOccurrence(id);
 
         if(occurrence.getStaOcorrencia().equals(SITUATION_INCIDENT.FINALIZADA)){
