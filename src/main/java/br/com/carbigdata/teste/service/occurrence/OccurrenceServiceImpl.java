@@ -20,6 +20,7 @@ import br.com.carbigdata.teste.repository.CustomerRepository;
 import br.com.carbigdata.teste.repository.OccurrenceRepository;
 import br.com.carbigdata.teste.service.address.IAddressService;
 import br.com.carbigdata.teste.service.customer.ICustomerService;
+import br.com.carbigdata.teste.shared.uploadImage.MinioClientProperties;
 import br.com.carbigdata.teste.utils.UtilDocuments;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,6 +52,8 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     private final IAddressService addressService;
 
     private final IPhotoOccurrenceService photoOccurrenceService;
+
+    private final MinioClientProperties minioClientProperties;
 
     @Override
     public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request,Long customerId, Long idAddress) {
@@ -207,12 +210,18 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     private  OccurrenceDTO createResponsePhotoOccurrence(Occurrence occurrence, Address address, Customer customer, List<PhotoOccurrence> photoOccurrences) {
         List<PhotoOccurrenceDTO> photoOccurrencesList = new ArrayList<>();
 
+
         for(PhotoOccurrence photoOccurrence : photoOccurrences){
+            String urlFinal =  minioClientProperties.getUrl() +
+                    "/" +
+                    minioClientProperties.getBucket_name() +
+                    "/"
+                    + photoOccurrence.getDscPathBucket();
 
             PhotoOccurrenceDTO photoOccurrenceDTO = new PhotoOccurrenceDTO();
             photoOccurrenceDTO.setCodFotoOcorrencia(photoOccurrence.getCodFotoOcorrencia());
             photoOccurrenceDTO.setDtaCriacao(photoOccurrence.getDtaCriacao());
-            photoOccurrenceDTO.setDscPathBucket(photoOccurrence.getDscPathBucket());
+            photoOccurrenceDTO.setDscPathBucket(urlFinal);
             photoOccurrenceDTO.setDscHash(photoOccurrence.getDscHash());
 
             photoOccurrencesList.add(photoOccurrenceDTO);
