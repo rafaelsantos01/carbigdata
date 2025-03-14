@@ -22,7 +22,7 @@ public class UserControllerImpl implements IUserController {
     @Override
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
         try {
-            UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(loginRequestDTO.getUser_name(), loginRequestDTO.getPassword());
+            UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(loginRequestDTO.getUserName(), loginRequestDTO.getPassword());
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
             String accessToken = tokenService.generateToken((User) auth.getPrincipal());
