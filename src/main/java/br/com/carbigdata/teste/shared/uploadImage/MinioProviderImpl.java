@@ -19,25 +19,38 @@ public class MinioProviderImpl implements IUploadImageProvider{
 
 
     public String uploadFile(MultipartFile file) {
-
         try {
             InputStream inputStream = file.getInputStream();
-            String objectName = UUID.randomUUID() + "-" + file.getOriginalFilename();
 
             boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(minioClientProperties.getBucket_name()).build());
             if (!found) {
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(minioClientProperties.getBucket_name()).build());
             }
             ObjectWriteResponse objectWriteResponse = minioClient.putObject(
-                    PutObjectArgs.builder().bucket(minioClientProperties.getBucket_name()).object(objectName).stream(
+                    PutObjectArgs.builder().bucket(minioClientProperties.getBucket_name()).object(UUID.randomUUID().toString()).stream(
                                     inputStream, file.getSize(), -1)
                             .contentType(file.getContentType())
                             .build());
 
             return  objectWriteResponse.object();
-            //return objectWriteResponse.object();
         } catch (Exception e) {
             throw new RuntimeException("Error occurred: " + e.getMessage());
+        }
+    }
+
+    public void deleteFile(String objectName) {
+        try {
+            boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(minioClientProperties.getBucket_name()).build());
+            if (!found) {
+                throw new Error("Bucket not found");
+            }
+
+            minioClient.removeObject(RemoveObjectArgs.builder()
+                    .bucket(minioClientProperties.getBucket_name())
+                    .object(objectName)
+                    .build());
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while deleting file: " + e.getMessage());
         }
     }
 }

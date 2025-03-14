@@ -17,7 +17,7 @@ public interface IPhotoOccurrenceController {
     @PutMapping("/{id}")
     PhotoOccurrenceDTO updatePhotoOccurrence(@PathVariable Long id, MultipartFile file);
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deletePhotoOccurrence(@PathVariable Long id);
 

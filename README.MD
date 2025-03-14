@@ -1,0 +1,1 @@
+- Tabela Customer e occurrence ter um status para uma exclusão logica.

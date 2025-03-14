@@ -9,6 +9,7 @@ import br.com.carbigdata.teste.repository.OccurrenceRepository;
 import br.com.carbigdata.teste.repository.PhotoOccurrenceRepository;
 import br.com.carbigdata.teste.shared.uploadImage.IUploadImageProvider;
 import br.com.carbigdata.teste.shared.uploadImage.MinioClientProperties;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,6 +51,19 @@ public class PhotoOccurrenceServiceImpl implements IPhotoOccurrenceService {
         return  responsePhotoOccurrence;
     }
 
+    @Override
+    public PhotoOccurrenceDTO updatePhotoOccurrence(Long id, MultipartFile file) {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public void deletePhotoOccurrence(Long id) {
+        PhotoOccurrence photoOccurrence = findByOccurrenceId(id);
+        uploadImageProvider.deleteFile(photoOccurrence.getDscPathBucket());
+
+        photoOccurrenceRepository.delete(photoOccurrence);
+    }
 
 
     public  List<PhotoOccurrence> savePhotoOccurrenceOccurrence(List<MultipartFile> files,Occurrence occurrence){
@@ -69,17 +83,6 @@ public class PhotoOccurrenceServiceImpl implements IPhotoOccurrenceService {
 
         return  photos;
     }
-
-    @Override
-    public PhotoOccurrenceDTO updatePhotoOccurrence(Long id, MultipartFile file) {
-        return null;
-    }
-
-    @Override
-    public void deletePhotoOccurrence(Long id) {
-    }
-
-
 
     private PhotoOccurrence findByOccurrenceId(Long id) {
         return photoOccurrenceRepository.findById(id).orElseThrow(() -> new RuntimeException("Photo Occurrence not found"));
