@@ -6,8 +6,11 @@ Este projeto consiste em uma API Rest desenvolvida com **Spring Boot** para gere
 
 ## Melhorias
 
-- A tabela `Customer` e `Occurrence` deve ter um status para realizar uma exclusão lógica, para ter um histórico de dados.
-
+- A tabela `Customer` e `Occurrence` deveria ter um status para realizar uma exclusão lógica, para ter um histórico de dados.
+- [x] Adição do Swagger para documentação da API e melhor entendimento do projeto.
+- [x] Adição de uma tabela users para realizar o login na aplicação.
+  - foi criado um user padrão para realizar o login na aplicação. (userName: admin, password: admin)
+  - Foi criado um endpoint para realizar o login na aplicação.
 ## Tecnologias Utilizadas
 
 - **Java**: 21
@@ -69,6 +72,15 @@ MINIO_URL
 MINIO_ACCESS_KEY
 MINIO_SECRET_KEY
 MINIO_BUCKET_NAME
+
+# Swagger
+ENABLE_SWAGGER
+
+```
+### Swagger
+
+```
+ Acesse o endereço http://localhost:8080/swagger-ui/index.html para acessar a documentação da API
 ```
 
 ## Estrutura do Projeto
@@ -88,7 +100,8 @@ MINIO_BUCKET_NAME
 ## Como Rodar o Projeto
 ```
 1 - Clone o repositório
-2 - Execute o comando `docker-compose up -d` para subir o banco de dados, minio e a aplicação
+2 - Criar o jar do projeto com o comando `mvn clean package`
+3 - Execute o comando `docker-compose up -d` para subir o banco de dados, minio e a aplicação
 ```
 
 ---

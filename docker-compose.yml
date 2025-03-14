@@ -30,6 +30,30 @@ services:
       sh -c "mkdir -p /data/occurrences && 
              minio server /data --console-address ':9090'"
 
+  app:
+    build: .
+    container_name: java_app
+    restart: always
+    depends_on:
+      - postgres
+      - minio
+    environment:
+      SERVER_PORT: 8080
+      APP_DB_URL: jdbc:postgresql://postgres:5432/carBigData
+      APP_DB_USERNAME: admin
+      APP_DB_PASSWORD: admin
+      API_SECURITY_TOKEN_SECRET: 12312312312
+      MINIO_URL: http://minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET_NAME: occurrences
+      ENABLE_SWAGGER: true
+    volumes:
+      - ./target/teste-0.0.1-SNAPSHOT.jar:/app.jar
+    entrypoint: [ "java", "-jar", "/app.jar" ]
+    ports:
+      - "8080:8080"
+
 volumes:
   postgres_data:
   minio_data:
