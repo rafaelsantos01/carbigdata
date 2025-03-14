@@ -118,7 +118,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
         Page<Occurrence> occurrenceList = occurrenceRepository.findAll(pageable);
 
         for(Occurrence occurrence : occurrenceList){
-            OccurrenceDTO responseOccurrence = createResponsePhotoOccurrence(occurrence, occurrence.getAddress(), occurrence.getCustomer(), occurrence.getPhotoOccurrences());
+            OccurrenceDTO responseOccurrence = createResponseOccurrence(occurrence, occurrence.getAddress(), occurrence.getCustomer());
             content.add(responseOccurrence);
         }
 
