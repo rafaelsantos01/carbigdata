@@ -53,7 +53,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     private final IPhotoOccurrenceService photoOccurrenceService;
 
     @Override
-    public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request,Long customerId, Long idAddress) {
+    public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request,Long customerId, Long idAddress)     {
         Address address = addressRepository.findById(idAddress).orElseThrow(() -> new Error("Address not found"));
 
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new Error("Customer not found"));
