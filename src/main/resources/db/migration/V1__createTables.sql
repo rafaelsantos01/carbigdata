@@ -2,7 +2,7 @@
 CREATE TABLE cliente (
                          cod_cliente SERIAL PRIMARY KEY,
                          nme_cliente VARCHAR(255) NOT NULL,
-                         dta_nascimento DATE NOT NULL,
+                         dta_nascimento DATE,
                          nro_cpf VARCHAR(14) UNIQUE NOT NULL,
                          dta_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

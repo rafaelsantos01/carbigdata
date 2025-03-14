@@ -1,6 +1,8 @@
 package br.com.carbigdata.teste.service.occurrence;
 
 import br.com.carbigdata.teste.controller.occurrence.dto.CreateFileOccurrenceDTO;
+import br.com.carbigdata.teste.domain.occurrence.Occurrence;
+import br.com.carbigdata.teste.domain.occurrence.PhotoOccurrence;
 import br.com.carbigdata.teste.domain.occurrence.dto.PhotoOccurrenceDTO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,4 +15,6 @@ public interface IPhotoOccurrenceService {
     PhotoOccurrenceDTO updatePhotoOccurrence( Long id, MultipartFile file);
 
     void deletePhotoOccurrence( Long id);
+
+    List<PhotoOccurrence> savePhotoOccurrenceOccurrence(List<MultipartFile> files, Occurrence occurrence);
 }

@@ -1,10 +1,7 @@
 package br.com.carbigdata.teste.domain.customer;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -15,6 +12,7 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Customer {
 
     @Id
@@ -25,7 +23,7 @@ public class Customer {
     @Column(name = "nme_cliente", nullable = false)
     private String nmeCliente;
 
-    @Column(name = "dta_nascimento", nullable = false)
+    @Column(name = "dta_nascimento")
     private Date dtaNascimento;
 
     @Column(name = "nro_cpf", nullable = false)

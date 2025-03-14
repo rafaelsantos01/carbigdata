@@ -15,7 +15,6 @@ public class CustomerRequestDTO {
     @NotBlank
     private String nme_cliente;
 
-    @NotNull
     private Date dta_nascimento;
 
     @CPF

@@ -1,6 +1,9 @@
 package br.com.carbigdata.teste.service.occurrence;
 
 import br.com.carbigdata.teste.ENUM.SITUATION_INCIDENT;
+import br.com.carbigdata.teste.controller.address.dto.CreateAddressRequestDTO;
+import br.com.carbigdata.teste.controller.customer.dto.CustomerRequestDTO;
+import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceCompleteRequestDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrencePaginateResponseDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceRequestDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.UpdateOccurrenceRequestDTO;
@@ -15,13 +18,18 @@ import br.com.carbigdata.teste.domain.occurrence.dto.PhotoOccurrenceDTO;
 import br.com.carbigdata.teste.repository.AddressRepository;
 import br.com.carbigdata.teste.repository.CustomerRepository;
 import br.com.carbigdata.teste.repository.OccurrenceRepository;
+import br.com.carbigdata.teste.service.address.IAddressService;
+import br.com.carbigdata.teste.service.customer.ICustomerService;
 import br.com.carbigdata.teste.utils.UtilDocuments;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +45,12 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     private final CustomerRepository customerRepository;
 
     private final UtilDocuments utilDocuments;
+
+    private  final ICustomerService customerService;
+
+    private final IAddressService addressService;
+
+    private final IPhotoOccurrenceService photoOccurrenceService;
 
     @Override
     public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request,Long customerId, Long idAddress) {
@@ -127,10 +141,68 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
         occurrenceRepository.saveAndFlush(occurrence);
     }
 
+    @Override
+    @Transactional
+    public OccurrenceDTO createOccurrenceComplete(List<MultipartFile> imagem, String dadosJson) throws JsonProcessingException {
+        OccurrenceCompleteRequestDTO data = convertStringToObj(dadosJson);
+
+        Customer customer = customerRepository.findByNroCpf(utilDocuments.clearDocument(data.getNro_cpf()))
+                .orElseGet(() -> {
+                    CustomerRequestDTO customerRequestDTO = new CustomerRequestDTO();
+                    customerRequestDTO.setDta_nascimento(null);
+                    customerRequestDTO.setNme_cliente(utilDocuments.clearDocument(data.getNro_cpf()));
+                    customerRequestDTO.setNro_cpf(data.getNro_cpf());
+
+                    CustomerDTO customerSave = customerService.createCustomer(customerRequestDTO);
+
+                    return Customer.builder()
+                            .codCliente(customerSave.getCodCliente())
+                            .dtaCriacao(customerSave.getDtaCriacao())
+                            .dtaNascimento(customerSave.getDtaNascimento())
+                            .nmeCliente(customerSave.getNmeCliente())
+                            .nroCpf(customerSave.getNroCpf())
+                            .build();
+                });
+
+        CreateAddressRequestDTO addressRequestDTO = new CreateAddressRequestDTO();
+        addressRequestDTO.setNmeCidade(data.getNmeCidade());
+        addressRequestDTO.setNmeEstado(data.getNmeEstado());
+        addressRequestDTO.setNroCep(data.getNroCep());
+        addressRequestDTO.setNmeBairro(data.getNmeBairro());
+        addressRequestDTO.setNmeLogradouro(data.getNmeLogradouro());
+
+        AddressDTO address = addressService.createAddress(addressRequestDTO);
+
+
+        Occurrence occurrence = new Occurrence();
+        occurrence.setAddress(Address.builder()
+                .codEndereco(address.getCodEndereco())
+                        .nmeBairro(address.getNmeBairro())
+                        .nmeCidade(address.getNmeCidade())
+                        .nmeEstado(address.getNmeEstado())
+                        .nroCep(address.getNroCep())
+                        .nmeLogradouro(address.getNmeLogradouro())
+                .build());
+        occurrence.setCustomer(customer);
+        occurrence.setStaOcorrencia(SITUATION_INCIDENT.ATIVA);
+        occurrence.setDtaOcorrencia(data.getDtaOcorrencia());
+
+        Occurrence occurrenceSaved = occurrenceRepository.saveAndFlush(occurrence);
+
+        List<PhotoOccurrence> photoOccurrenceDTOS = photoOccurrenceService.savePhotoOccurrenceOccurrence(imagem, occurrenceSaved);
+
+
+        return createResponsePhotoOccurrence(occurrenceSaved, occurrenceSaved.getAddress(), occurrenceSaved.getCustomer(), photoOccurrenceDTOS);
+    }
+
+    private OccurrenceCompleteRequestDTO convertStringToObj(String dadosJson) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(dadosJson, OccurrenceCompleteRequestDTO.class);
+    }
+
     private Occurrence findByIdOccurrence(Long id) {
         return occurrenceRepository.findById(id).orElseThrow(() -> new Error("Occurrence not found"));
     }
-
 
     private  OccurrenceDTO createResponsePhotoOccurrence(Occurrence occurrence, Address address, Customer customer, List<PhotoOccurrence> photoOccurrences) {
         List<PhotoOccurrenceDTO> photoOccurrencesList = new ArrayList<>();

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -31,13 +32,28 @@ public class PhotoOccurrenceServiceImpl implements IPhotoOccurrenceService {
 
     @Override
     public CreateFileOccurrenceDTO createPhotoOccurrence(Long id, List<MultipartFile> files) {
-        List<PhotoOccurrenceDTO> photos = new ArrayList<>();
 
-        Occurrence occurrence = occurrenceRepository.findById(id).orElseThrow(() -> new RuntimeException("Occurrence not found"));
+        Occurrence occurrence = occurrenceRepository.findById(id).orElseThrow(() -> new Error("Ocorrência não encontrada"));
         if(occurrence.getStaOcorrencia().equals(SITUATION_INCIDENT.FINALIZADA)){
             throw new Error("Ocorrência já finalizada");
         }
 
+        List<PhotoOccurrence> photos = savePhotoOccurrenceOccurrence(files,occurrence);
+
+        List<PhotoOccurrenceDTO> photoOccurrenceDTOS = photos.stream()
+                .map(this::createResponsePhotoOccurrence)
+                .collect(Collectors.toList());
+
+        CreateFileOccurrenceDTO responsePhotoOccurrence = createResponseOccurrence(occurrence);
+        responsePhotoOccurrence.setPhotos(photoOccurrenceDTOS);
+
+        return  responsePhotoOccurrence;
+    }
+
+
+
+    public  List<PhotoOccurrence> savePhotoOccurrenceOccurrence(List<MultipartFile> files,Occurrence occurrence){
+        List<PhotoOccurrence> photos = new ArrayList<>();
         for(MultipartFile file: files){
             String fileName = uploadImageProvider.uploadFile(file);
             PhotoOccurrence photoOccurrence = new PhotoOccurrence();
@@ -48,12 +64,10 @@ public class PhotoOccurrenceServiceImpl implements IPhotoOccurrenceService {
 
             PhotoOccurrence photoOccurrenceNew = photoOccurrenceRepository.saveAndFlush(photoOccurrence);
 
-            photos.add(createResponsePhotoOccurrence(photoOccurrenceNew));
+            photos.add(photoOccurrenceNew);
         }
-        CreateFileOccurrenceDTO responsePhotoOccurrence = createResponseOccurrence(occurrence);
-        responsePhotoOccurrence.setPhotos(photos);
 
-        return  responsePhotoOccurrence;
+        return  photos;
     }
 
     @Override
