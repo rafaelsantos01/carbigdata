@@ -26,7 +26,9 @@ services:
       - "9090:9090"
     volumes:
       - minio_data:/data
-    command: server /data --console-address ":9090"
+    entrypoint: >
+      sh -c "mkdir -p /data/occurrences && 
+             minio server /data --console-address ':9090'"
 
 volumes:
   postgres_data:
