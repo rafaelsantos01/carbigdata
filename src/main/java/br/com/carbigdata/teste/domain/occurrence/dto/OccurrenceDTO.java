@@ -1,0 +1,29 @@
+package br.com.carbigdata.teste.domain.occurrence.dto;
+
+import br.com.carbigdata.teste.ENUM.SITUATION_INCIDENT;
+import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
+import br.com.carbigdata.teste.domain.customer.dto.CustomerDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+
+@Getter
+@Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class OccurrenceDTO {
+    private Long codOcorrencia;
+
+    private Timestamp dtaOcorrencia;
+
+    private SITUATION_INCIDENT staOcorrencia;
+
+    private CustomerDTO customer;
+
+    private AddressDTO address;
+
+    private List<PhotoOccurrenceDTO> photoOccurrence;
+}
