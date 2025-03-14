@@ -8,7 +8,9 @@ import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
 import br.com.carbigdata.teste.domain.customer.Customer;
 import br.com.carbigdata.teste.domain.customer.dto.CustomerDTO;
 import br.com.carbigdata.teste.domain.occurrence.Occurrence;
+import br.com.carbigdata.teste.domain.occurrence.PhotoOccurrence;
 import br.com.carbigdata.teste.domain.occurrence.dto.OccurrenceDTO;
+import br.com.carbigdata.teste.domain.occurrence.dto.PhotoOccurrenceDTO;
 import br.com.carbigdata.teste.repository.AddressRepository;
 import br.com.carbigdata.teste.repository.CustomerRepository;
 import br.com.carbigdata.teste.repository.OccurrenceRepository;
@@ -87,7 +89,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     public OccurrenceDTO getOccurrence(Long id) {
         Occurrence occurrence = findByIdOccurrence(id);
 
-        return createResponseOccurrence(occurrence, occurrence.getAddress(), occurrence.getCustomer());
+        return createResponsePhotoOccurrence(occurrence, occurrence.getAddress(), occurrence.getCustomer(),occurrence.getPhotoOccurrences());
     }
 
     @Override
@@ -100,7 +102,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
         Page<Occurrence> occurrenceList = occurrenceRepository.findAll(pageable);
 
         for(Occurrence occurrence : occurrenceList){
-            OccurrenceDTO responseOccurrence = createResponseOccurrence(occurrence, occurrence.getAddress(), occurrence.getCustomer());
+            OccurrenceDTO responseOccurrence = createResponsePhotoOccurrence(occurrence, occurrence.getAddress(), occurrence.getCustomer(), occurrence.getPhotoOccurrences());
             content.add(responseOccurrence);
         }
 
@@ -127,7 +129,30 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
         return occurrenceRepository.findById(id).orElseThrow(() -> new Error("Occurrence not found"));
     }
 
+
+    private  OccurrenceDTO createResponsePhotoOccurrence(Occurrence occurrence, Address address, Customer customer, List<PhotoOccurrence> photoOccurrences) {
+        List<PhotoOccurrenceDTO> photoOccurrencesList = new ArrayList<>();
+
+        for(PhotoOccurrence photoOccurrence : photoOccurrences){
+
+            PhotoOccurrenceDTO photoOccurrenceDTO = new PhotoOccurrenceDTO();
+            photoOccurrenceDTO.setCodFotoOcorrencia(photoOccurrence.getCodFotoOcorrencia());
+            photoOccurrenceDTO.setDtaCriacao(photoOccurrence.getDtaCriacao());
+            photoOccurrenceDTO.setDscPathBucket(photoOccurrence.getDscPathBucket());
+            photoOccurrenceDTO.setDscHash(photoOccurrence.getDscHash());
+
+            photoOccurrencesList.add(photoOccurrenceDTO);
+        }
+
+        OccurrenceDTO responseOccurrence = createResponseOccurrence(occurrence, address, customer);
+        responseOccurrence.setPhotoOccurrence(photoOccurrencesList);
+
+        return responseOccurrence;
+    }
+
     private OccurrenceDTO createResponseOccurrence(Occurrence occurrence, Address address, Customer customer) {
+
+
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setCodCliente(customer.getCodCliente());
         customerDTO.setNmeCliente(customer.getNmeCliente());

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 
 @Getter
@@ -23,4 +24,6 @@ public class OccurrenceDTO {
     private CustomerDTO customer;
 
     private AddressDTO address;
+
+    private List<PhotoOccurrenceDTO> photoOccurrence;
 }

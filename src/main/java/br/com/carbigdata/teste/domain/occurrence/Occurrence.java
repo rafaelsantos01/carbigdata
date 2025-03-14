@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Table(name = "ocorrencia")
 @Entity
@@ -38,4 +39,8 @@ public class Occurrence {
     @Column(name = "sta_ocorrencia", nullable = false)
     @Enumerated(EnumType.STRING)
     private SITUATION_INCIDENT staOcorrencia;
+
+    @OneToMany(mappedBy = "occurrence", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PhotoOccurrence> photoOccurrences;
+
 }
