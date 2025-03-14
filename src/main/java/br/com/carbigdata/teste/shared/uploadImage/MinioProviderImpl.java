@@ -21,13 +21,14 @@ public class MinioProviderImpl implements IUploadImageProvider{
     public String uploadFile(MultipartFile file) {
         try {
             InputStream inputStream = file.getInputStream();
+            String objectName = UUID.randomUUID() + "-" + file.getOriginalFilename();
 
             boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(minioClientProperties.getBucket_name()).build());
             if (!found) {
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(minioClientProperties.getBucket_name()).build());
             }
             ObjectWriteResponse objectWriteResponse = minioClient.putObject(
-                    PutObjectArgs.builder().bucket(minioClientProperties.getBucket_name()).object(UUID.randomUUID().toString()).stream(
+                    PutObjectArgs.builder().bucket(minioClientProperties.getBucket_name()).object(objectName.replaceAll("\\s+", "")).stream(
                                     inputStream, file.getSize(), -1)
                             .contentType(file.getContentType())
                             .build());

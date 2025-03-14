@@ -28,7 +28,14 @@ public class SecurityConfigurations {
     private SecurityFilter securityFilter;
 
     private static final String[] AUTH_WHITELIST = {
-            "/auth/login"
+            "/auth/login",
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/v2/api-docs",
+            "/webjars/**",
+            "/swagger-ui/**"
     };
 
     @Bean
@@ -37,8 +44,10 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(AUTH_WHITELIST)
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
