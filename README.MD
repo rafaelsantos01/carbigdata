@@ -100,8 +100,10 @@ ENABLE_SWAGGER
 ## Como Rodar o Projeto
 ```
 1 - Clone o repositório
-2 - Criar o jar do projeto com o comando `mvn clean package`
-3 - Execute o comando `docker-compose up -d` para subir o banco de dados, minio e a aplicação
+2 - Para rodar os teste execute o comando `./mvnw test`
+3 - Criar o jar do projeto com o comando `./mvnw clean package`
+4 - Execute o comando `docker-compose up -d` para subir o banco de dados, minio e a aplicação
+
 ```
 
 ---
