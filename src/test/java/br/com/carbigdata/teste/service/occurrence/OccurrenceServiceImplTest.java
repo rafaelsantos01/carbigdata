@@ -28,7 +28,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -186,7 +185,7 @@ class OccurrenceServiceImplTest {
     }
 
     @Test
-    @DisplayName("Error finalizing the occurrence already completed- Success")
+    @DisplayName("Error finalizing the occurrence already completed- Error")
     void finalizeOccurrenceError() {
         Long occurrenceId = 1L;
 

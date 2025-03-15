@@ -79,7 +79,7 @@ class AddressServiceImplTest {
     }
 
     @Test
-    @DisplayName("Not Delete Address with occurrence - Success")
+    @DisplayName("Not Delete Address with occurrence - Error")
     void testDeleteAddressError() {
         Occurrence occurrence = new Occurrence();
         List<Occurrence> occurrenceList = new ArrayList<>();

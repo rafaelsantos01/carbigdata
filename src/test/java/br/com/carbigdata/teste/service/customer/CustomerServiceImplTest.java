@@ -54,7 +54,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Create Customer - CPF already exists")
+    @DisplayName("Error with create customer document exists - Error")
     void testCreateCustomerCpfAlreadyExistsThrowsError() {
         CustomerRequestDTO requestDTO = requestDTO();
         Customer existingCustomer = customerTwo();
@@ -84,7 +84,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Update Customer - CPF already exists")
+    @DisplayName("Delete customer - success")
     void testDeleteCustomerSuccess() {
         Long id = 1L;
         Customer customer = customerOne();
@@ -98,7 +98,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Delete Customer - with occurrences")
+    @DisplayName("Error with delete customer - Error")
     void testDeleteCustomerWithOccurrencesThrowsError() {
         Long id = 1L;
         Customer customer = customerOne();
@@ -125,7 +125,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Get Customer - not found")
+    @DisplayName("Get customer - Success")
     void testGetCustomersSuccess() {
         int page = 0, size = 2;
         Customer customer1 = customerOne();

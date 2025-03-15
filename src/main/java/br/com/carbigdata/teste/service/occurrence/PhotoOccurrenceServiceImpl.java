@@ -96,7 +96,7 @@ public class PhotoOccurrenceServiceImpl implements IPhotoOccurrenceService {
 
 
     private PhotoOccurrence findByOccurrenceId(Long id) {
-        return photoOccurrenceRepository.findById(id).orElseThrow(() -> new RuntimeException("Photo Occurrence not found"));
+        return photoOccurrenceRepository.findById(id).orElseThrow(() -> new Error("Photo Occurrence not found"));
     }
 
     private CreateFileOccurrenceDTO createResponseOccurrence(Occurrence occurrence) {
