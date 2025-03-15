@@ -114,9 +114,13 @@ class OccurrenceServiceImplTest {
     @Test
     @DisplayName("Delete Occurrence none photo - Success")
     void testDeleteOccurrence() {
-        Long occurrenceId = 1L;
+        List<PhotoOccurrence> photoOccurrences = new ArrayList<>();
 
-        when(occurrenceRepository.findById(occurrenceId)).thenReturn(Optional.of(occurrence()));
+        Long occurrenceId = 1L;
+        Occurrence occurrence = occurrence();
+        occurrence.setPhotoOccurrences(photoOccurrences);
+
+        when(occurrenceRepository.findById(occurrenceId)).thenReturn(Optional.of(occurrence));
 
         occurrenceService.deleteOccurrence(occurrenceId);
     }

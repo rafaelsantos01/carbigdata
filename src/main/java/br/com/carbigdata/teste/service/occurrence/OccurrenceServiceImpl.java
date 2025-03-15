@@ -101,7 +101,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     @Override
     public void deleteOccurrence(Long id) {
         Occurrence occurrence = findByIdOccurrence(id);
-        if(occurrence.getPhotoOccurrences() != null){
+        if(!occurrence.getPhotoOccurrences().isEmpty()){
             for(PhotoOccurrence photoOccurrence : occurrence.getPhotoOccurrences()){
                 photoOccurrenceService.deletePhotoOccurrence(photoOccurrence.getCodFotoOcorrencia());
             }

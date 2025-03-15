@@ -4,6 +4,7 @@ import br.com.carbigdata.teste.controller.address.dto.AddressPaginatedResponseDT
 import br.com.carbigdata.teste.controller.address.dto.CreateAddressRequestDTO;
 import br.com.carbigdata.teste.domain.address.Address;
 import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
+import br.com.carbigdata.teste.domain.occurrence.Occurrence;
 import br.com.carbigdata.teste.repository.AddressRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +79,22 @@ class AddressServiceImplTest {
     }
 
     @Test
+    @DisplayName("Not Delete Address with occurrence - Success")
+    void testDeleteAddressError() {
+        Occurrence occurrence = new Occurrence();
+        List<Occurrence> occurrenceList = new ArrayList<>();
+        occurrenceList.add(occurrence);
+        Long id = 1L;
+        Address existingAddress = createAddress();
+        existingAddress.setOccurrenceList(occurrenceList);
+
+        when(addressRepository.findById(id)).thenReturn(Optional.of(existingAddress));
+
+        Error exception = assertThrows(Error.class, () ->  addressService.deleteAddress(id));
+        assertEquals("O Endereço não pode ser deletado pois está associado a uma ocorrência", exception.getMessage());
+    }
+
+    @Test
     @DisplayName("Get Address - Success")
     void testGetAddressSuccess() {
         Long id = 1L;
@@ -129,6 +147,7 @@ class AddressServiceImplTest {
         address.setNmeLogradouro("Rua A");
         address.setNroCep("01000-000");
         address.setCodEndereco(1L);
+        address.setOccurrenceList(new ArrayList<>());
 
         return address;
     }

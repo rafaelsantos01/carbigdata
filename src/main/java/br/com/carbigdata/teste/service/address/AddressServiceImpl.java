@@ -50,6 +50,11 @@ public class AddressServiceImpl implements IAddressService {
     @Override
     public void deleteAddress(Long id) {
         Address address = findByAddressId(id);
+
+        if(!address.getOccurrenceList().isEmpty()){
+            throw new Error("O Endereço não pode ser deletado pois está associado a uma ocorrência");
+        }
+
         addressRepository.delete(address);
     }
 
