@@ -36,7 +36,7 @@ Este projeto consiste em uma API Rest desenvolvida com **Spring Boot** para gere
 3. [x] Conter recursos de paginação em todas as consultas
 4. [x] Os dados produzidos deverão ser armazenados no servidor de banco de dados previamente criado em container
 5. [x] Armazenar arquivos e imagens no servidor de armazenamento de objetos Min.io (Storage) previamente criado em container
-6. [ ] Orquestrar a solução final utilizando Docker Compose de modo que inclua todos os contêineres utilizados (Servidor Min.io (Storage), Banco de Dados, Artefato Java)
+6. [x] Orquestrar a solução final utilizando Docker Compose de modo que inclua todos os contêineres utilizados (Servidor Min.io (Storage), Banco de Dados, Artefato Java)
 7. [x] Utilizar Flyway Migrations para criar e popular tabelas do banco de dados
 ```
 
@@ -100,8 +100,10 @@ ENABLE_SWAGGER
 ## Como Rodar o Projeto
 ```
 1 - Clone o repositório
-2 - Criar o jar do projeto com o comando `mvn clean package`
-3 - Execute o comando `docker-compose up -d` para subir o banco de dados, minio e a aplicação
+2 - Para rodar os teste execute o comando `./mvnw test`
+3 - Criar o jar do projeto com o comando `./mvnw clean package`
+4 - Execute o comando `docker-compose up -d` para subir o banco de dados, minio e a aplicação
+
 ```
 
 ---

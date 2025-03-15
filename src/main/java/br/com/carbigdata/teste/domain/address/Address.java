@@ -1,7 +1,10 @@
 package br.com.carbigdata.teste.domain.address;
 
+import br.com.carbigdata.teste.domain.occurrence.Occurrence;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Table(name = "endereco")
 @Entity
@@ -32,6 +35,7 @@ public class Address {
     @Column(name = "nme_estado", nullable = false)
     private String nmeEstado;
 
-
+    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Occurrence> occurrenceList;
 
 }

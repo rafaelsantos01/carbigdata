@@ -56,7 +56,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     private final MinioClientProperties minioClientProperties;
 
     @Override
-    public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request,Long customerId, Long idAddress) {
+    public OccurrenceDTO createOccurrence(OccurrenceRequestDTO request,Long customerId, Long idAddress)     {
         Address address = addressRepository.findById(idAddress).orElseThrow(() -> new Error("Address not found"));
 
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new Error("Customer not found"));
@@ -101,6 +101,13 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
     @Override
     public void deleteOccurrence(Long id) {
         Occurrence occurrence = findByIdOccurrence(id);
+        if(!occurrence.getPhotoOccurrences().isEmpty()){
+            for(PhotoOccurrence photoOccurrence : occurrence.getPhotoOccurrences()){
+                photoOccurrenceService.deletePhotoOccurrence(photoOccurrence.getCodFotoOcorrencia());
+            }
+        }
+
+
         occurrenceRepository.deleteById(occurrence.getCodOcorrencia());
     }
 
@@ -121,7 +128,7 @@ public class OccurrenceServiceImpl implements IOccurrenceService {
         Page<Occurrence> occurrenceList = occurrenceRepository.findAll(pageable);
 
         for(Occurrence occurrence : occurrenceList){
-            OccurrenceDTO responseOccurrence = createResponsePhotoOccurrence(occurrence, occurrence.getAddress(), occurrence.getCustomer(), occurrence.getPhotoOccurrences());
+            OccurrenceDTO responseOccurrence = createResponseOccurrence(occurrence, occurrence.getAddress(), occurrence.getCustomer());
             content.add(responseOccurrence);
         }
 

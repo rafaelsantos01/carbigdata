@@ -52,8 +52,18 @@ public class PhotoOccurrenceServiceImpl implements IPhotoOccurrenceService {
     }
 
     @Override
+    @Transactional
     public PhotoOccurrenceDTO updatePhotoOccurrence(Long id, MultipartFile file) {
-        return null;
+        PhotoOccurrence photoOccurrence = photoOccurrenceRepository.findById(id)
+                .orElseThrow(() -> new Error("Foto não encontrada"));
+
+        uploadImageProvider.deleteFile(photoOccurrence.getDscPathBucket());
+
+        String fileName = uploadImageProvider.uploadFile(file);
+        photoOccurrence.setDscPathBucket(fileName);
+
+        PhotoOccurrence photoOccurrenceSaved = photoOccurrenceRepository.saveAndFlush(photoOccurrence);
+        return createResponsePhotoOccurrence(photoOccurrenceSaved);
     }
 
     @Override
@@ -64,7 +74,6 @@ public class PhotoOccurrenceServiceImpl implements IPhotoOccurrenceService {
 
         photoOccurrenceRepository.delete(photoOccurrence);
     }
-
 
     public  List<PhotoOccurrence> savePhotoOccurrenceOccurrence(List<MultipartFile> files,Occurrence occurrence){
         List<PhotoOccurrence> photos = new ArrayList<>();
@@ -84,8 +93,10 @@ public class PhotoOccurrenceServiceImpl implements IPhotoOccurrenceService {
         return  photos;
     }
 
+
+
     private PhotoOccurrence findByOccurrenceId(Long id) {
-        return photoOccurrenceRepository.findById(id).orElseThrow(() -> new RuntimeException("Photo Occurrence not found"));
+        return photoOccurrenceRepository.findById(id).orElseThrow(() -> new Error("Photo Occurrence not found"));
     }
 
     private CreateFileOccurrenceDTO createResponseOccurrence(Occurrence occurrence) {

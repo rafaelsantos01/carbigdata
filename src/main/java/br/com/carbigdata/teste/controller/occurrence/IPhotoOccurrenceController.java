@@ -28,7 +28,7 @@ public interface IPhotoOccurrenceController {
             description = "Substitui uma foto existente associada a uma ocorrência."
     )
     @PutMapping("/{id}")
-    PhotoOccurrenceDTO updatePhotoOccurrence(@PathVariable Long id, MultipartFile file);
+    PhotoOccurrenceDTO updatePhotoOccurrence(@PathVariable Long id,@RequestParam("file") MultipartFile file);
 
 
     @Operation(

@@ -5,8 +5,6 @@ import br.com.carbigdata.teste.controller.customer.dto.CustomerRequestDTO;
 import br.com.carbigdata.teste.domain.customer.Customer;
 import br.com.carbigdata.teste.domain.customer.dto.CustomerDTO;
 import br.com.carbigdata.teste.repository.CustomerRepository;
-import br.com.carbigdata.teste.repository.OccurrenceRepository;
-import br.com.carbigdata.teste.repository.PhotoOccurrenceRepository;
 import br.com.carbigdata.teste.utils.UtilDocuments;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -25,10 +23,6 @@ public class CustomerServiceImpl implements ICustomerService{
     private final CustomerRepository customerRepository;
 
     private final UtilDocuments utilDocuments;
-
-    private final OccurrenceRepository occurrenceRepository;
-
-    private final PhotoOccurrenceRepository photoOccurrenceRepository;
 
     @Override
     public CustomerDTO createCustomer(CustomerRequestDTO data) {
