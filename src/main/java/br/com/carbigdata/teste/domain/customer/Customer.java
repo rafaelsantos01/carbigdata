@@ -1,7 +1,6 @@
 package br.com.carbigdata.teste.domain.customer;
 
 import br.com.carbigdata.teste.domain.occurrence.Occurrence;
-import br.com.carbigdata.teste.domain.occurrence.PhotoOccurrence;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,6 +1,5 @@
 package br.com.carbigdata.teste.controller.occurrence;
 
-import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceCompleteRequestDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrencePaginateResponseDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.OccurrenceRequestDTO;
 import br.com.carbigdata.teste.controller.occurrence.dto.UpdateOccurrenceRequestDTO;
