@@ -9,6 +9,7 @@ import br.com.carbigdata.teste.domain.address.Address;
 import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
 import br.com.carbigdata.teste.domain.customer.Customer;
 import br.com.carbigdata.teste.domain.occurrence.Occurrence;
+import br.com.carbigdata.teste.domain.occurrence.PhotoOccurrence;
 import br.com.carbigdata.teste.domain.occurrence.dto.OccurrenceDTO;
 import br.com.carbigdata.teste.repository.AddressRepository;
 import br.com.carbigdata.teste.repository.CustomerRepository;
@@ -111,11 +112,29 @@ class OccurrenceServiceImplTest {
     }
 
     @Test
-    @DisplayName("Delete Occurrence - Success")
+    @DisplayName("Delete Occurrence none photo - Success")
     void testDeleteOccurrence() {
         Long occurrenceId = 1L;
 
         when(occurrenceRepository.findById(occurrenceId)).thenReturn(Optional.of(occurrence()));
+
+        occurrenceService.deleteOccurrence(occurrenceId);
+    }
+
+    @Test
+    @DisplayName("Delete Occurrence  - Success")
+    void testDeleteOccurrenceWithPhoto() {
+        PhotoOccurrence photoOccurrence = new PhotoOccurrence();
+        photoOccurrence.setCodFotoOcorrencia(1L);
+
+        List<PhotoOccurrence> photoOccurrences = new ArrayList<>();
+        photoOccurrences.add(photoOccurrence);
+
+        Long occurrenceId = 1L;
+        Occurrence occurrence = occurrence();
+        occurrence.setPhotoOccurrences(photoOccurrences);
+
+        when(occurrenceRepository.findById(occurrenceId)).thenReturn(Optional.of(occurrence));
 
         occurrenceService.deleteOccurrence(occurrenceId);
     }
