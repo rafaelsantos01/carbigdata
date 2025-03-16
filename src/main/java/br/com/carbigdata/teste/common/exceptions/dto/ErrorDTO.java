@@ -1,5 +1,6 @@
 package br.com.carbigdata.teste.common.exceptions.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,10 +11,13 @@ import java.time.format.DateTimeFormatter;
 @Setter
 public class ErrorDTO {
 
+    @Schema(example = "Erro ao processar a requisição")
     private String message;
 
+    @Schema(example = "400")
     private int status;
 
+    @Schema(example = "2021-07-01T10:00:00")
     private String timestamp;
 
 

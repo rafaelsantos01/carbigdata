@@ -4,8 +4,6 @@ import br.com.carbigdata.teste.controller.address.dto.AddressPaginatedResponseDT
 import br.com.carbigdata.teste.controller.address.dto.CreateAddressRequestDTO;
 import br.com.carbigdata.teste.domain.address.dto.AddressDTO;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
