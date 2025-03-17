@@ -50,6 +50,13 @@ Implementar uma API Rest para o diagrama de banco de dados acima tomando por bas
 4. [x] Criar um endpoint para finalização da ocorrência. Uma vez finalizada, a ocorrência não poderá ser alterada.
 5. [x] Realizar o upload de uma ou mais imagens de evidências enviando-as para o Min.io.
 ```
+
+## Não entregue
+```
+Item 3 dos Requisitos Específicos: Encontrei certa dificuldade na criação do JPQL e, devido ao prazo de entrega, não consegui implementá-lo.
+```
+
+
 ## Configuração do Ambiente
 
 ### Variáveis de Ambiente
