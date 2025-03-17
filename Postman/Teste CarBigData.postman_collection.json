@@ -1,0 +1,765 @@
+{
+	"info": {
+		"_postman_id": "5bc19db8-54bd-4602-a352-f2656acfea22",
+		"name": "Teste CarBigData",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38485510"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonObject = pm.response.json();\r",
+									"pm.environment.set(\"access_token\", jsonObject.access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"admin\",\r\n    \"password\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Novo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nme_cliente\":\"Lorrany Vasques\",\r\n    \"dta_nascimento\":\"1996-10-01\",\r\n    \"nro_cpf\":\"69169046077\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nme_cliente\":\"Lorrany Vasques\",\r\n    \"dta_nascimento\":\"1996-10-02\",\r\n    \"nro_cpf\":\"09085393981\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customer/9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca Paginada",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customer?page=0&size=2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customer/9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Novo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nmeLogradouro\":\"trabalho lo5\",\r\n    \"nmeBairro\":\"Azambuja4\",\r\n    \"nroCep\":\"88353492\",\r\n    \"nmeCidade\":\"Brusque\",\r\n    \"nmeEstado\":\"Santa Catarina\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/address",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nmeLogradouro\":\"antiga piscina33\",\r\n    \"nmeBairro\":\"zantao2\",\r\n    \"nroCep\":\"88357386\",\r\n    \"nmeCidade\":\"Brusque\",\r\n    \"nmeEstado\":\"Santa Catarina\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/address/24",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"address",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/address/24",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"address",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca Paginada",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/address?page=1&size=2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"address"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/address/24",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"address",
+								"24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ocorrencia",
+			"item": [
+				{
+					"name": "Photos",
+					"item": [
+						{
+							"name": "Nova foto na ocorrencia",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": [
+												"/C:/Users/rafin/OneDrive/Imagens/Capturas de tela/Captura de tela 2024-11-01 221153.png",
+												"/C:/Users/rafin/OneDrive/Imagens/Capturas de tela/Captura de tela 2024-11-02 094830.png"
+											]
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/photo/occurrence/25",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photo",
+										"occurrence",
+										"25"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/photo/occurrence/30",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photo",
+										"occurrence",
+										"30"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "postman-cloud:///1f001a49-15a8-4ba0-a19b-2cdc699cf579"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/photo/occurrence/32",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"photo",
+										"occurrence",
+										"32"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Novo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dtaOcorrencia\":\"2025-03-13T14:30:00.000Z\",\r\n    \"staOcorrencia\":\"ATIVA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/occurrence/customer/9/address/24",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"occurrence",
+								"customer",
+								"9",
+								"address",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dtaOcorrencia\":\"2025-03-12T14:30:00.000Z\",\r\n    \"staOcorrencia\":\"FINALIZADA\",\r\n    \"customerId\":\"4\",\r\n    \"addressId\":\"4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/occurrence/4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"occurrence",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finalizar Ocorrencia",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/occurrence/15",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"occurrence",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/occurrence/25",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"occurrence",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca Paginada",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/occurrence/detailed?page=2&size=2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"occurrence",
+								"detailed"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/occurrence/25",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"occurrence",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ocorrencia completa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1f001a49-15a8-4ba0-a19b-2cdc699cf579"
+								},
+								{
+									"key": "dados",
+									"value": "{\"nro_cpf\": \"123.456.789-00\", \"nme_cliente\": \"João da Silva\", \"dtaOcorrencia\": \"2024-03-14T10:30:00\", \"nmeLogradouro\": \"Rua Exemplo\", \"nmeBairro\": \"Centro\", \"nroCep\": \"12345-678\", \"nmeCidade\": \"São Paulo\", \"nmeEstado\": \"SP\"}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/occurrence",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"occurrence"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
